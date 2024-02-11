@@ -17,6 +17,7 @@ var config settings
 type settings struct {
 	TemplateFormatVersion string              `yaml:"TemplateFormatVersion"`
 	Description           string              `yaml:"Description"`
+	Server                server              `yaml:"Server"`
 	Resources             map[string]resource `yaml:"Resources"`
 }
 
@@ -35,6 +36,10 @@ type properties struct {
 type response struct {
 	StatusCode int    `yaml:"StatusCode"`
 	Content    string `yaml:"Content"`
+}
+
+type server struct {
+	Port int `yaml:"Port"`
 }
 
 func (res *resource) getResponse(vars map[string]string) (map[string]interface{}, error) {
@@ -101,8 +106,8 @@ func init() {
 }
 
 func main() {
-	log.Println("Server starting on port 8080...")
-	if err := http.ListenAndServe(":8080", route.Default); err != nil {
+	log.Printf("Server starting on port %v...", config.Server.Port)
+	if err := http.ListenAndServe(fmt.Sprintf(":%v", config.Server.Port), route.Default); err != nil {
 		log.Fatal(err)
 	}
 }

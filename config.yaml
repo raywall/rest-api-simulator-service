@@ -1,6 +1,9 @@
 TemplateFormatVersion: 2024-02-10
 Description: config sample of lowcode-lambda with go
 
+Server:
+  Port: 8081
+
 Resources:
   WhatsAppAuth:
     ResourceType: Endpoint
